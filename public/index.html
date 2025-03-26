@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Tier Maker</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Save Modal -->
+  <div id="save-modal" class="modal">
+    <div class="modal-content">
+      <h3>Save Tier Playlists</h3>
+      <div id="save-form"></div>
+      <div class="modal-actions">
+        <button id="save-cancel">Cancel</button>
+        <button id="save-confirm">Save All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier Selection Modal -->
+  <div id="tier-modal" class="modal">
+    <div class="modal-content">
+      <h3>Select Tier</h3>
+      <select id="tier-select"></select>
+      <div class="modal-actions">
+        <button id="modal-cancel">Cancel</button>
+        <button id="modal-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+      <div class="nav-header">
+        <i class="fab fa-spotify"></i>
+        <h1>Tier Maker</h1>
+      </div>
+      <div class="user-section">
+        <div id="login-container">
+          <button class="spotify-login-btn" onclick="login()">
+            <i class="fab fa-spotify"></i> Connect Spotify
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-header">
+        <h2 id="content-title">Create Tier List</h2>
+        <div class="header-actions">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search tracks or albums...">
+          </div>
+          <button class="save-btn" id="save-tierlist">
+            <i class="fas fa-save"></i> Save Tier List
+          </button>
+        </div>
+      </div>
+
+      <div id="app">
+        <div class="initial-state">
+          <div class="empty-state">
+            <i class="fas fa-music"></i>
+            <h3>Your Tier List Awaits</h3>
+            <p>Search for tracks or albums to begin building your tier list.</p>
+            <button class="spotify-login-btn" onclick="login()" id="main-login-btn">
+              <i class="fab fa-spotify"></i> Connect Spotify
+            </button>
+          </div>
+        </div>
+
+        <div class="builder-container" style="display: none;">
+          <!-- Search Results Column -->
+          <div class="search-column">
+            <div class="results-header">
+              <h4>Search Results</h4>
+            </div>
+            <div class="song-list" id="song-results"></div>
+            <div class="album-list" id="album-results"></div>
+          </div>
+
+          <!-- Lobby Column -->
+          <div class="lobby-column">
+            <div class="lobby-header">
+              <h4>Lobby</h4>
+              <div class="lobby-actions">
+                <button id="select-all-lobby">
+                  <i class="fas fa-check-double"></i> Select All
+                </button>
+                <button id="clear-lobby">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+            </div>
+            <div class="lobby" id="lobby"></div>
+          </div>
+
+          <!-- Tier List Column -->
+          <div class="tier-column">
+            <div class="tier-list-actions">
+              <button class="tier-action-btn" id="add-tier">
+                <i class="fas fa-plus"></i> Add Tier
+              </button>
+            </div>
+            <div class="tier-list" id="tier-list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Templates -->
+  <template id="tier-template">
+    <div class="tier">
+      <div class="tier-header">
+        <input type="text" class="tier-name" value="S" maxlength="1">
+        <div class="tier-actions">
+          <button class="tier-action-btn up">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+          <button class="tier-action-btn down">
+            <i class="fas fa-arrow-down"></i>
+          </button>
+          <button class="tier-action-btn delete">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="tier-content"></div>
+    </div>
+  </template>
+
+  <template id="track-template">
+    <div class="track">
+      <div class="track-select">
+        <i class="far fa-square"></i>
+      </div>
+      <img class="track-art" src="https://via.placeholder.com/80" alt="Track Art">
+      <div class="track-info">
+        <div class="track-title">Track Title</div>
+        <div class="track-artist">Artist Name</div>
+      </div>
+      <div class="track-duration">3:45</div>
+      <div class="track-actions">
+        <button class="track-btn add">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <template id="album-template">
+    <div class="album">
+      <img class="album-art" src="https://via.placeholder.com/80" alt="Album Art">
+      <div class="album-info">
+        <div class="album-title">Album Title</div>
+        <div class="album-artist">Artist Name</div>
+      </div>
+      <div class="album-actions">
+        <button class="album-btn add-album">
+          <i class="fas fa-plus"></i> Add Album
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
